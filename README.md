@@ -34,9 +34,9 @@ pip install flask
 
 **Запуск приложения**
 1. Запустите Flask приложение:
-'''bash
+```bash
 python main.py
-'''
+```
 2. Установите зависимости:
 
 ```bash
