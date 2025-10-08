@@ -27,17 +27,12 @@ pip (менеджер пакетов Python)
 git clone <URL-репозитория>
 cd password-generator
 '''
-Создайте виртуальное окружение (рекомендуется):
-
-bash
-python -m venv venv
-source venv/bin/activate  # Linux/MacOS
-venv\Scripts\activate     # Windows
 Установите зависимости:
 
-'''bash
+1. '''bash
 pip install flask
 '''
+
 **Запуск приложения**
   1. -Запустите Flask приложение:
 '''bash
