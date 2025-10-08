@@ -28,8 +28,7 @@ git clone <URL репозитория>
 cd genpass
 ```
 Установите зависимости:
-
-1. ```bash
+```bash
 pip install flask
 ```
 
