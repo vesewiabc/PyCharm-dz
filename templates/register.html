@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Вход</title>
+    <title>Регистрация</title>
 </head>
 <body>
-    <h1>Вход в систему</h1>
+    <h1>Регистрация</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -24,16 +24,10 @@
             <input type="password" name="password" required>
         </div>
         <div>
-            <button type="submit">Войти</button>
+            <button type="submit">Зарегистрироваться</button>
         </div>
     </form>
 
-    <p><a href="/register">Нет аккаунта? Зарегистрироваться</a></p>
-
-    <div style="margin-top: 20px;">
-        <p><strong>Тестовые аккаунты:</strong></p>
-        <p>admin / admin</p>
-        <p>user / user</p>
-    </div>
+    <p><a href="/login">Уже есть аккаунт? Войти</a></p>
 </body>
 </html>
