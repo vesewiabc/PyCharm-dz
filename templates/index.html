@@ -5,10 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генератор случайных паролей</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Стили для шапки с пользователем */
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-greeting {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .username {
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .app-title {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <!-- Шапка с информацией о пользователе -->
+        {% if username %}
+        <div class="user-header">
+            <div class="user-info">
+                <div class="user-greeting">
+                    Добро пожаловать, <span class="username">{{ username }}</span>!
+                </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                🚪 Выйти
+            </a>
+        </div>
+        {% endif %}
+
+        <header class="app-title">
             <h1>🔐 Генератор случайных паролей</h1>
             <p>Создавайте безопасные пароли за секунды</p>
         </header>
@@ -120,15 +193,14 @@
                     passwordText.textContent = data.password;
 
                     // Обновляем информацию о пароле
-                    let infoText = `Длина: ${data.length} символов | `;
+                    let infoText = Длина: ${data.length} символов | ;
                     infoText += data.difficulty === 'easy' ? 'Только буквы' : 'Буквы, цифры и специальные символы';
                     passwordInfo.textContent = infoText;
 
                     // Обновляем индикатор сложности
                     strengthFill.className = 'password-strength-fill';
                     strengthFill.classList.add(data.difficulty === 'easy' ? 'strength-easy' : 'strength-hard');
-
-                    // Показываем блок с результатом
+        // Показываем блок с результатом
                     resultDiv.style.display = 'block';
 
                     // Анимация появления
