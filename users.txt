@@ -1,6 +1,1 @@
-admin:admin:admin
-user:user:user
-Роман:1001:user
-asd:123:user
-Vanya:1234:user
-1:1:user
+
