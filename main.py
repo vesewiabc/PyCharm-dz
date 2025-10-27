@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session,url_for
 import sqlite3
 import os
 
 app = Flask(__name__)
-
+app.secret_key = '123'
 
 connection = sqlite3.connect('password.db')
 cursor = connection.cursor()
@@ -44,7 +44,7 @@ def register():
                 try:
                     connection = sqlite3.connect('password.db')
                     cursor=connection.cursor()
-                    cursor.execute('INSERT INTO Users (username, password) VALUES (?, ?)', (username,password))
+                    cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username,password))
                     connection.commit()
                     connection.close()
                     return redirect('/login')
@@ -58,36 +58,42 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-
+        
         connection = sqlite3.connect('password.db')
-        connection = connection.cursor()
+        cursor = connection.cursor()
         cursor.execute("SELECT username FROM users WHERE username = ? AND password = ?", (username, password))
-        user = connection.fetchone()
+        users = cursor.fetchall()
+        
         connection.close()
-
+        
+        for user in users:
+            print(user)
+        
         if user:
             session['user_id'] = user[0]
             session['username'] = username
-            return redirect('/index')
+            return redirect('/passwords')
         else:
-             return render_template('login.html', error='error')
+            flash('Неверное имя пользователя или пароль!')
+    
         
+       
     return render_template('login.html')
-
-@app.route('/index')
+       
+@app.route('/passwords')
 def passwords():
-    if 'user_id' not in session:
+    if 'id' not in session:
         return redirect('/login')
     
-    user_id = session['user_id']
+    user = session['id']
     
     connection = sqlite3.connect('password.db')
     connection = connection.cursor()
-    cursor.execute("SELECT * FROM password WHERE user_id = ?", (user_id,))
+    cursor.execute("SELECT id FROM password WHERE id = ?", (id))
     passwords = cursor.fetchall()
     connection.close()
     
-    return render_template('index.html', 
+    return render_template('passwords.html', 
                          passwords=passwords, 
                          username=session['username'])
 
@@ -104,11 +110,16 @@ def add_password():
     
     connection = sqlite3.connect('password.db')
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO password (website, login, password) VALUES (?, ?, ?, ?)", (website, login, password))
+    cursor.execute("INSERT INTO password (website, login, password) VALUES (?, ?, ?)", (website, login, password))
     connection.commit()
     connection.close()
     
-    return redirect('/index')
+    return redirect('/passwrods')
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect('/login')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5555)
